@@ -26,15 +26,14 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectService serviceImplementation="FormService"/>
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
         <group id="MyPlugin.GeneratorMenu" text="Generator" description="Generator">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="GeneratorToolbarAction" class="GeneratorToolbarAction" text="Generate service layer"
-                    description="GeneratorToolbarAction"/>
+            <action id="controllers.GeneratorToolbarAction" class="controllers.GeneratorToolbarAction" text="Generate service layer"
+                    description="controllers.GeneratorToolbarAction"/>
         </group>
     </actions>
 

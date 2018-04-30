@@ -9,12 +9,14 @@ class Method(val name: String,
              val uri: String,
              val params: List<UriParam>,
              val response: Response,
-             val request: Request) {
+             val request: Request,
+             val comment:String?= null) {
 
     fun convertToApiMethod(): ApiMethodGenModel {
         return ApiMethodGenModel(type,
                 name,
                 uri,
+                comment,
                 params.map { param ->
                     RequestParamGenModel(param.name,
                             param.type,

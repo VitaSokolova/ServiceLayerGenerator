@@ -8,6 +8,7 @@ import generation.models.RequestParamGenModel
 data class ApiMethodGenModel(val type: MethodType,
                              var name: String,
                              val url: String,
+                             val comment: String? = null,
                              val params: MutableList<RequestParamGenModel> = arrayListOf(),
                              var requestObj: RequestGenObj?,
                              var responseObj: ResponseGenObj?,

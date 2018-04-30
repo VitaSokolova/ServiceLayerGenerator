@@ -4,8 +4,13 @@ import tree.DataTree
 import tree.Model
 
 object MainGenerator {
-    val groupModels: List<GroupGenModel> = mutableListOf()
-    val parsingModels: ArrayList<Model> = arrayListOf()
+    val groupModels: MutableList<GroupGenModel> = mutableListOf()
+    var parsingModels: MutableList<Model> = arrayListOf()
 
-    fun createGenerationModel(dataTree: DataTree) = dataTree.groups.map { group -> GroupGenModel(group) }.toMutableList()
+    fun createGenerationModel(dataTree: DataTree) {
+        parsingModels = dataTree.models
+        dataTree.groups.map { group -> GroupGenModel(group) }.toMutableList()
+    }
+
+    //TODO:сгенерировать enum-ы
 }

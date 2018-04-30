@@ -48,7 +48,7 @@ public class SelectSourceController {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        rootPanel.setLayout(new GridLayoutManager(9, 4, new Insets(0, 0, 0, 0), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(9, 4, new Insets(40, 40, 40, 40), -1, -1));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, 24, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);

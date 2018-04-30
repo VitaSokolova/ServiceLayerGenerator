@@ -4,9 +4,14 @@ import generation.models.CodeGenerator
 
 
 class RepoMethodParam(var name: String,
-                      var type: String) : CodeGenerator {
-    override fun generateCode(): String {
-        return "$name: $type"
-    }
+                      var type: String,
+                      var comment: String? = null) : CodeGenerator {
 
+    override fun generateCode() = "$name: $type"
+
+    fun generateCommentSection(): String {
+        return """* @param: $name $comment"""
+//        comment?.let { return """* @param: $name $comment""" }
+//        return ""
+    }
 }

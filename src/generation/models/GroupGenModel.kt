@@ -3,7 +3,6 @@ package generation.models
 import generation.models.api.ApiGenModel
 import generation.models.repo.RepoGenModel
 import tree.Group
-import tree.Model
 
 class GroupGenModel(val group: Group) : CodeGenerator {
 
@@ -14,7 +13,9 @@ class GroupGenModel(val group: Group) : CodeGenerator {
         this.apiGenModel = ApiGenModel("${group.name.capitalize()}Api",
                 group.comment,
                 group.methods.map { method -> method.convertToApiMethod() })
-        this.repoGenModel = RepoGenModel(apiInterface = apiGenModel)
+        this.repoGenModel = RepoGenModel("${group.name.capitalize()}Repository",
+                group.comment,
+                apiGenModel)
     }
 
     override fun generateCode(): String {

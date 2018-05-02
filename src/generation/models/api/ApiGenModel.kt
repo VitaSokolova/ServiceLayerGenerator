@@ -17,4 +17,6 @@ ${generateMethods()}
 }""".trimIndent()
     }
     private fun generateMethods() = methods.joinToString("\n\n", transform = { method -> method.generateCode() })
+
+    override fun toString() = name
 }

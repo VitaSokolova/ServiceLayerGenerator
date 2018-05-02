@@ -4,10 +4,10 @@ import generation.models.MainGenerator
 import generation.models.api.RequestGenObj
 
 class Request(val type: MediaType,
-              val attributes: List<Field>? = null,
+              val attributes: List<AttrField>? = null,
               val headers: List<Header>? = null,
               val body: Model? = null,
-              val bodyAsModelRef:String? = null) {
+              val bodyAsModelRef: String? = null) {
 
     fun createRequestObj(): RequestGenObj? {
         return when {

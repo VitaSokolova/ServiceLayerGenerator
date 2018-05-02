@@ -1,8 +1,8 @@
 package generation.models.api
 
-enum class RxObservableType(name: String) {
+enum class RxObservableType(val observableName: String) {
     SINGLE("Single"),
-    OBSERVABLE("Single"),
-    MAYBE("Single"),
-    COMPLETABLE("Single")
+    OBSERVABLE("Observable"),
+    MAYBE("Maybe"),
+    COMPLETABLE("Completable")
 }

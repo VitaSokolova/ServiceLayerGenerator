@@ -1,10 +1,9 @@
 package tree
 
-import common.MethodType
-
-class Field(val name: String,
-            val type: MethodType,
-            val defaultValue: String? = null,
-            val comment: String? = null,
-            val isRequired: Boolean) {
+open class Field(val name: String,
+                 val type: String,
+                 val defaultValue: String? = null,
+                 val comment: String? = null,
+                 isRequired: Boolean = true,
+                 isCollection:Boolean = false) {
 }

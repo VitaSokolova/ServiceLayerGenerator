@@ -5,7 +5,7 @@ import generation.models.api.ResponseGenObj
 
 class Response(val code: Int,
                val type: MediaType,
-               val attributes: List<Field>? = null,
+               val attributes: List<AttrField>? = null,
                val headers: List<Header>? = null,
                val body: Model? = null,
                val bodyAsModelRef: String? = null,

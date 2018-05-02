@@ -7,12 +7,13 @@ import generation.models.api.ApiMethodGenModel
 class Method(val name: String,
              val type: MethodType,
              val uri: String,
-             val params: List<UriParam>,
-             val response: Response,
-             val request: Request,
-             val comment:String?= null) {
+             val params: MutableList<UriParam> = arrayListOf(),
+             val response: Response? = null,
+             val request: Request? = null,
+             val comment: String? = null) {
 
-    fun convertToApiMethod(): ApiMethodGenModel {
+    fun convertToApiMethod(parentParams: List<UriParam> = arrayListOf()): ApiMethodGenModel {
+        params.addAll(parentParams)
         return ApiMethodGenModel(type,
                 name,
                 uri,
@@ -22,10 +23,10 @@ class Method(val name: String,
                             param.type,
                             param.fieldType,
                             param.defaultValue,
-                            param.comment)
+                            param.comment ?: "")
                 }.toMutableList(),
-                request.createRequestObj(),
-                response.createResponseObj(),
-                response.isCollection)
+                request?.createRequestObj(),
+                response?.createResponseObj(),
+                response?.isCollection ?: false)
     }
 }

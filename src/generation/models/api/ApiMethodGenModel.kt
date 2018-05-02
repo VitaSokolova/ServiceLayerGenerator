@@ -16,6 +16,10 @@ data class ApiMethodGenModel(val type: MethodType,
 
     var rxObservableType: RxObservableType = RxObservableType.OBSERVABLE
 
+    init {
+        name.decapitalize()
+    }
+
     override fun generateCode(): String {
         return """
     @${type.name}($url)
@@ -27,13 +31,19 @@ data class ApiMethodGenModel(val type: MethodType,
         requestObj?.let {
             params.add(RequestParamGenModel(it.name.decapitalize(), RequestParamType.BODY, it.name.capitalize(), it.defaultValue))
         }
-        return params.joinToString(",", transform = { param -> param.generateCode() })
+        return params.joinToString(",\n", transform = { param -> param.generateCode() })
     }
 
     private fun generateReturnParam(): String {
         responseObj?.let {
-            return ": ${rxObservableType.name}<${it.name}>"
+            return if (isCollectionInResponse) {
+                ": ${rxObservableType.observableName}<List<${it.name}>>"
+            } else {
+                ": ${rxObservableType.observableName}<${it.name}>"
+            }
         }
         return ""
     }
+
+    override fun toString() = name
 }

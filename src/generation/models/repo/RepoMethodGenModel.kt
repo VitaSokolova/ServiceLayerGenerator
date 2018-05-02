@@ -14,15 +14,17 @@ class RepoMethodGenModel(var name: String,
 
     override fun generateCode(): String {
         return """
-     /**
-     * $comment
+    /**
+     * ${comment ?: "TODO: добавить комментарий"}
      ${generateParamsCommentsSection()}
      */
-    fun $name(${generateParamsSection()})${generateReturnSection()} = //TODO:заменить на свою модель
+    fun $name(${generateParamsSection()})${generateReturnSection()} =
             $apiName.${apiMethod.name}(${generateParamsSentToFun()})
             ${generateTransformSection()}
-       """.trimIndent()
+       """
     }
+
+    override fun toString() = name
 
     private fun generateParamsSection() = params.joinToString(",\n", transform = { param -> param.generateCode() })
 
@@ -30,11 +32,19 @@ class RepoMethodGenModel(var name: String,
 
     private fun generateTransformSection() = if (apiMethod.isCollectionInResponse) ".transformCollection()" else ".map { it.transform() }"
 
-    private fun generateParamsCommentsSection() = params.joinToString("\n", transform = { param -> param.generateCommentSection() })
+    private fun generateParamsCommentsSection(): String {
+        return if (params.isNotEmpty()) {
+            params.joinToString("\n", transform = { param -> param.generateCommentSection() })
+        } else ""
+    }
 
     private fun generateReturnSection(): String {
         apiMethod.responseObj?.let {
-            return ": ${apiMethod.rxObservableType.name}<$it>"
+            return if (apiMethod.isCollectionInResponse) {
+                ": ${apiMethod.rxObservableType.observableName}<List<${it.name}>>"
+            } else {
+                ": ${apiMethod.rxObservableType.observableName}<${it.name}>"
+            }
         }
         return ": Completable"
     }

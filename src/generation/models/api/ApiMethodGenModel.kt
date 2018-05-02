@@ -16,10 +16,6 @@ data class ApiMethodGenModel(val type: MethodType,
 
     var rxObservableType: RxObservableType = RxObservableType.OBSERVABLE
 
-    init {
-        name.decapitalize()
-    }
-
     override fun generateCode(): String {
         return """
     @${type.name}($url)
@@ -42,7 +38,7 @@ data class ApiMethodGenModel(val type: MethodType,
                 ": ${rxObservableType.observableName}<${it.name}>"
             }
         }
-        return ""
+        return ": Completable"
     }
 
     override fun toString() = name

@@ -21,9 +21,5 @@ public object MainGenerator:CodeGenerator {
     }
     override fun toString() = projectName
 
-    fun getCodeForLeaf(groupName:String?, methodName:String?, repoOrApiName:String? ): String {
-      return "mew"
-    }
-
     //TODO:сгенерировать enum-ы
 }

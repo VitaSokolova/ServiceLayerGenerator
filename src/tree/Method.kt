@@ -15,7 +15,7 @@ class Method(val name: String,
     fun convertToApiMethod(parentParams: List<UriParam> = arrayListOf()): ApiMethodGenModel {
         params.addAll(parentParams)
         return ApiMethodGenModel(type,
-                name,
+                name.decapitalize(),
                 uri,
                 comment,
                 params.map { param ->

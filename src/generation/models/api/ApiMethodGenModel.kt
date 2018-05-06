@@ -24,7 +24,7 @@ data class ApiMethodGenModel(val type: MethodType,
     }
 
     private fun generateParamsSection(): String {
-        requestObj?.let {
+         requestObj?.let {
             params.add(RequestParamGenModel(it.name.decapitalize(), RequestParamType.BODY, it.name.capitalize(), it.defaultValue))
         }
         return params.joinToString(",\n", transform = { param -> param.generateCode() })

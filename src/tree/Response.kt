@@ -16,7 +16,7 @@ class Response(val code: Int,
             bodyAsModelRef != null -> ResponseGenObj(bodyAsModelRef)
             body != null -> {
                 val newResponseModelName = "${MainGenerator.parsingModels.size}Obj"
-                MainGenerator.parsingModels.add(Model(newResponseModelName, body.fields))
+                MainGenerator.parsingModels.add(Model(newResponseModelName, "",  body.fields))
                 ResponseGenObj(newResponseModelName)
             }
             else -> null

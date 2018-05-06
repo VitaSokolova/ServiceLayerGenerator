@@ -22,31 +22,31 @@ class MockDataTreeGenerator {
         return result
     }
 
-    private fun createUserModel() = Model("User", arrayListOf(
+    private fun createUserModel() = Model("User", "", arrayListOf(
             Field("id", "String"),
             Field("name", "String"),
             Field("phone", "String"),
             Field("email", "String", "#6BE379"),
-            Field("birthday", "Long?", isRequired = false),
+            Field("birthday", "Long", isRequired = false),
             Field("isBlocked", "Boolean"),
             Field("isTemporary", "Boolean"),
             Field("isPhoneConfirmed", "Boolean")))
 
-    private fun createUserUpdateModel() = Model("User", arrayListOf(
+    private fun createUserUpdateModel() = Model("User", "", arrayListOf(
             Field("id", "String"),
             Field("name", "String"),
             Field("phone", "String"),
             Field("email", "String", "#6BE379"),
             Field("birthday", "Long?", isRequired = false)))
 
-    private fun createCategoryModel() = Model("Category", arrayListOf(
+    private fun createCategoryModel() = Model("Category", "", arrayListOf(
             Field("id", "String", "sdfsd235235"),
             Field("observableName", "String"),
             Field("pic", "String"),
             Field("color", "String", "#6BE379"),
             Field("sub", "Category", isRequired = false, isCollection = true)))
 
-    private fun createShopInfoModel() = Model("ShopInfo", arrayListOf(
+    private fun createShopInfoModel() = Model("ShopInfo", "", arrayListOf(
             Field("distance", "Double", comment = "Расстояние от клиента до магазина в километрах", isRequired = false),
             Field("pinIcon", "String", comment = "Иконка для карты"),
             Field("price", "Double", comment = "Стоимость доставки"),

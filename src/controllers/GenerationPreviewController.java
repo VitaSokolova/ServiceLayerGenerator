@@ -10,7 +10,9 @@ import tree.MockDataTreeGenerator;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,9 +50,12 @@ public class GenerationPreviewController {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(generator, true);
         //create the child nodes
 
+        DefaultMutableTreeNode groupsNode = new DefaultMutableTreeNode("Groups", true);
+        root.add(groupsNode);
+
         generator.getGroupModels().forEach(groupGenModel -> {
             DefaultMutableTreeNode groupNode = new DefaultMutableTreeNode(groupGenModel, true);
-            root.add(groupNode);
+            groupsNode.add(groupNode);
 
             DefaultMutableTreeNode apiNode = new DefaultMutableTreeNode(groupGenModel.getApiGenModel(), true);
             DefaultMutableTreeNode repositoryNode = new DefaultMutableTreeNode(groupGenModel.getRepoGenModel(), true);
@@ -62,6 +67,14 @@ public class GenerationPreviewController {
 
             groupGenModel.getRepoGenModel().getRepoMethods().forEach(methodModel
                     -> repositoryNode.add(new DefaultMutableTreeNode(methodModel)));
+        });
+
+        DefaultMutableTreeNode modelsNode = new DefaultMutableTreeNode("Models", true);
+        root.add(modelsNode);
+
+        generator.getParsingModels().forEach(model -> {
+            DefaultMutableTreeNode modelNode = new DefaultMutableTreeNode(model, true);
+            modelsNode.add(modelNode);
         });
 
         tree.setModel(new DefaultTreeModel(root));
@@ -77,9 +90,6 @@ public class GenerationPreviewController {
                     return;
                 } else {
                     CodeGenerator leaf = (CodeGenerator) node.getUserObject();
-//                    int level = node.getLevel();
-//                    int number = node.getIndex(node.getParent());
-//                    TreeNode[] path = node.getPath();
                     previewTextPane.setText(leaf.generateCode());
                 }
             }

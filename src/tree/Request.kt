@@ -14,7 +14,7 @@ class Request(val type: MediaType,
             bodyAsModelRef != null -> RequestGenObj(bodyAsModelRef)
             body != null -> {
                 val newResponseModelName = "${MainGenerator.parsingModels.size}Obj"
-                MainGenerator.parsingModels.add(Model(newResponseModelName, body.fields))
+                MainGenerator.parsingModels.add(Model(newResponseModelName, "", body.fields))
                 RequestGenObj(newResponseModelName)
             }
             else -> null

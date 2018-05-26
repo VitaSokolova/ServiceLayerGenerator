@@ -32,7 +32,7 @@ class MockDataTreeGenerator {
             Field("isTemporary", "Boolean"),
             Field("isPhoneConfirmed", "Boolean")))
 
-    private fun createUserUpdateModel() = Model("User", "", arrayListOf(
+    private fun createUserUpdateModel() = Model("UserUpdateInfo", "", arrayListOf(
             Field("id", "String"),
             Field("name", "String"),
             Field("phone", "String"),
@@ -55,20 +55,20 @@ class MockDataTreeGenerator {
 
     private fun createCatalogGroup(): Group {
         return Group("Catalog",
-                "/categories/",
+                "/categories/{shopId}",
                 arrayListOf(UriParam("shopId", RequestParamType.PATH, "String", true)),
-                arrayListOf(Method("CategoryList", MethodType.GET, "", response = Response(200, MediaType.JSON, bodyAsModelRef = "Category", isCollection = true))),
+                arrayListOf(Method("CategoryList", MethodType.GET, "/categories/{shopId}", response = Response(200, MediaType.JSON, bodyAsModelRef = "Category", isCollection = true))),
                 "Каталог товаров")
 
     }
 
     private fun createShopGroup(): Group {
         return Group("Shops",
-                "/shops",
+                "/shops{?location}{?group}{?type}",
                 arrayListOf(UriParam("location", RequestParamType.QUERY, "String", true, comment = "coordinates, divided in {lat},{lon} format. For example Red Square is at 'location=55.754082,37.620526'."),
                         UriParam("group", RequestParamType.QUERY, "String", false),
                         UriParam("type", RequestParamType.QUERY, "String", false)),
-                arrayListOf(Method("ShopList", MethodType.GET, "", response = Response(200, MediaType.JSON, bodyAsModelRef = "ShopInfo", isCollection = true))),
+                arrayListOf(Method("ShopList", MethodType.GET, "/shops{?location}{?group}{?type}", response = Response(200, MediaType.JSON, bodyAsModelRef = "ShopInfo", isCollection = true))),
                 "Магазины")
 
     }
@@ -76,16 +76,16 @@ class MockDataTreeGenerator {
     private fun createUserGroup(): Group {
 
         val methodGetUser = Method("GetUser",
-                MethodType.GET, "",
+                MethodType.GET, "/user",
                 response = Response(200, MediaType.JSON, bodyAsModelRef = "User"))
 
         val methodUpdateUser = Method("UpdateUser",
-                MethodType.POST, "",
+                MethodType.POST, "/user",
                 request = Request(MediaType.JSON, bodyAsModelRef = "UserUpdateInfo"),
                 response = Response(204, MediaType.JSON))
 
         val methodDeleteUser = Method("DeleteUser",
-                MethodType.DELETE, "",
+                MethodType.DELETE, "/user",
                 response = Response(204, MediaType.JSON))
 
         return Group("User",

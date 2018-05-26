@@ -4,7 +4,7 @@ import generation.models.CodeGenerator
 import generation.models.api.ApiGenModel
 import generation.models.api.ApiMethodGenModel
 
-class RepoGenModel(var name: String = "",
+class repogenmodel(var name: String = "",
                    var comment: String = "",
                    val apiInterface: ApiGenModel) : CodeGenerator {
 
@@ -21,7 +21,7 @@ class RepoGenModel(var name: String = "",
  */
 @PerApplication
 class $name @Inject constructor(
-        private val ${apiInterface.name.toLowerCase()}: ${apiInterface.name.capitalize()}) {
+        private val ${apiInterface.name.decapitalize()}: ${apiInterface.name.capitalize()}) {
 
         ${generateMethods()}
 

@@ -13,9 +13,13 @@ open class Field(val name: String,
         return """@SerializedName("$name") val $name: ${generateType()}${generateDefaultSection()} """
     }
 
-    private fun generateDefaultSection(): String {
+    private fun generateDefaultSection():String {
         return if (!defaultValue.isNullOrEmpty()) {
-            " = $defaultValue"
+            if (type == "String") {
+                """ = "$defaultValue" """
+            } else {
+                " = $defaultValue"
+            }
         } else {
             return if (!isRequired) {
                 "? = null"
@@ -25,5 +29,5 @@ open class Field(val name: String,
         }
     }
 
-    private fun generateType():String = if (isCollection) "List<$type>" else "$type"
+    private fun generateType(): String = if (isCollection) "List<$type>" else "$type"
 }

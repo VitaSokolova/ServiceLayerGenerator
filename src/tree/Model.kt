@@ -3,8 +3,8 @@ package tree
 import generation.models.CodeGenerator
 
 
-class Model(val name: String,
-            val comment: String = "",
+class Model(var name: String,
+            var comment: String = "",
             val fields: List<Field>) : CodeGenerator {
 
 
@@ -19,10 +19,14 @@ data class ${name.capitalize()}(
         """.trimIndent()
     }
 
-    private fun generateComment() = if (comment.isNotEmpty()) comment else "TODO: Добавить комментарий"
+    private fun generateComment() = if (comment.isNotEmpty()) {
+        comment
+    } else {
+        "TODO: Добавить комментарий"
+    }
 
     private fun generateParamSection() = fields.joinToString(",\n", transform = { param -> param.generateCode() })
 
-    override fun toString() = "$name"
+    override fun toString() = name
 
 }

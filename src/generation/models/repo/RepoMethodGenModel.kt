@@ -15,8 +15,7 @@ class RepoMethodGenModel(var name: String,
     override fun generateCode(): String {
         return """
     /**
-     * ${comment ?: "TODO: добавить комментарий"}
-     ${generateParamsCommentsSection()}
+     * ${comment ?: "TODO: добавить комментарий"} ${generateParamsCommentsSection()}
      */
     fun $name(${generateParamsSection()})${generateReturnSection()} =
             $apiName.${apiMethod.name}(${generateParamsSentToFun()})

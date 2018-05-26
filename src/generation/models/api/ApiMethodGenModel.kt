@@ -8,7 +8,7 @@ import generation.models.RequestParamGenModel
 data class ApiMethodGenModel(val type: MethodType,
                              var name: String,
                              val url: String,
-                             val comment: String? = null,
+                             var comment: String? = null,
                              val params: MutableList<RequestParamGenModel> = arrayListOf(),
                              var requestObj: RequestGenObj?,
                              var responseObj: ResponseGenObj?,
@@ -18,13 +18,15 @@ data class ApiMethodGenModel(val type: MethodType,
 
     override fun generateCode(): String {
         return """
-    @${type.name}($url)
+    {${generateCommentSection()}}
+    @${type.name}("$url")
     fun $name(${generateParamsSection()})${generateReturnParam()}
         """.trimIndent()
     }
 
     private fun generateParamsSection(): String {
-         requestObj?.let {
+        requestObj?.let {
+            params.clear()
             params.add(RequestParamGenModel(it.name.decapitalize(), RequestParamType.BODY, it.name.capitalize(), it.defaultValue))
         }
         return params.joinToString(",\n", transform = { param -> param.generateCode() })
@@ -39,6 +41,20 @@ data class ApiMethodGenModel(val type: MethodType,
             }
         }
         return ": Completable"
+    }
+
+    private fun generateCommentSection(): String {
+        return if (comment.isNullOrEmpty()) {
+            """
+    /**
+    * TODO: обавить комментарий
+    */"""
+        } else {
+            """
+    /**
+    *$comment
+    */"""
+        }
     }
 
     override fun toString() = name

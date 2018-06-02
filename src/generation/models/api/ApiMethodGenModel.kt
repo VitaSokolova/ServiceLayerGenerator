@@ -18,7 +18,7 @@ data class ApiMethodGenModel(val type: MethodType,
 
     override fun generateCode(): String {
         return """
-    {${generateCommentSection()}}
+    ${generateCommentSection()}
     @${type.name}("$url")
     fun $name(${generateParamsSection()})${generateReturnParam()}
         """.trimIndent()

@@ -24,7 +24,6 @@ class $name @Inject constructor(
         private val ${apiInterface.name.decapitalize()}: ${apiInterface.name.capitalize()}) {
 
         ${generateMethods()}
-
         }
        """.trimIndent()
     }

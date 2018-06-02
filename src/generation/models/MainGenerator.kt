@@ -30,21 +30,21 @@ public object MainGenerator : CodeGenerator {
     fun generateClasses(project: Project) {
         val factory = PsiFileFactory.getInstance(project)
         targetDirectory?.let {
-            it.createSubdirectory("models")
+           val modelsDir = it.createSubdirectory("models")
             parsingModels.forEach { genModel ->
                 val file = factory.createFileFromText("${genModel.name}.kt", Language.findLanguageByID("kotlin")
                         ?: Language.ANY, genModel.generateCode())
-                it.add(file)
+                modelsDir.add(file)
             }
-            it.createSubdirectory("groups")
+            val groupDir = it.createSubdirectory("groups")
             groupModels.forEach { genModel ->
-                it.createSubdirectory(genModel.group.name.toLowerCase())
+                val groupNameDirectory: PsiDirectory = groupDir.createSubdirectory(genModel.group.name.toLowerCase())
                 val repoFile = factory.createFileFromText("${genModel.repoGenModel.name}.kt", Language.findLanguageByID("kotlin")
                         ?: Language.ANY, genModel.repoGenModel.generateCode())
                 val apiFile = factory.createFileFromText("${genModel.apiGenModel.name}.kt", Language.findLanguageByID("kotlin")
                         ?: Language.ANY, genModel.apiGenModel.generateCode())
-                it.add(repoFile)
-                it.add(apiFile)
+                groupNameDirectory.add(repoFile)
+                groupNameDirectory.add(apiFile)
             }
         }
     }

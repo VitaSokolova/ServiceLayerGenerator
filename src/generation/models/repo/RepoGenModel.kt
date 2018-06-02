@@ -4,7 +4,7 @@ import generation.models.CodeGenerator
 import generation.models.api.ApiGenModel
 import generation.models.api.ApiMethodGenModel
 
-class repogenmodel(var name: String = "",
+class RepoGenModel(var name: String = "",
                    var comment: String = "",
                    val apiInterface: ApiGenModel) : CodeGenerator {
 
